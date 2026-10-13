@@ -1,0 +1,33 @@
+. clear all
+
+. use "Tables_2_3_4_A1_A2_A3.dta"
+note: 3955 of 5945 observations contain at least one missing value
+note: source timestamp: 2019-07-17 23:19
+note: 1 value label set(s) loaded
+(20 vars, 5,945 obs)
+
+. set more off
+
+. gen lC =log(C)
+
+. gen lIncome=log(Income)
+
+. gen lSize=log(Size)
+
+. preserve
+
+. quietly {
+. est dir
+Stored estimation results
+
+    name        command      depvar       title
+    ------------------------------------------------------------
+    est1        regress      Size        
+    est2        regress      Age         
+    est3        regress      Education   
+    est4        regress      Employed    
+    est5        regress      Employee    
+    est6        regress      Wealth      
+    est7        regress      Income      
+. 
+end of do-file

@@ -1,0 +1,66 @@
+{
+  "package_id": 231539,
+  "version": "V1",
+  "archive_filename": "231539-V1.zip",
+  "archive_sha256": "ad6f8d2178e4606ad16b513f12852539623c3e6b0d2a0b69a1c6aeb6a698daa0",
+  "archive_size_bytes": 206685,
+  "original_file_count": 11,
+  "unpacked_original_size_bytes": 758494,
+  "files": [
+    {
+      "path": "LICENSE.txt",
+      "size_bytes": 14974,
+      "sha256": "55290268ca38a42f8132b94bc8ceba0c0408361cabd4f950590b2fa2399b2d0f"
+    },
+    {
+      "path": "data/._Readme.tex",
+      "size_bytes": 4096,
+      "sha256": "73e7c435f58a1052ed36db83edd209abfe7004086a1969a26969b3bb4edd40ad"
+    },
+    {
+      "path": "data/Readme.tex",
+      "size_bytes": 3015,
+      "sha256": "1e2117d6de19c67ec4e4177ebabb7f8c64fb918f570eda09b00209415bbd6202"
+    },
+    {
+      "path": "data/Tables_1.do",
+      "size_bytes": 690,
+      "sha256": "4421553b68e209b326105907b076f144f2000b6f80153edfa9ad100ac6d82662"
+    },
+    {
+      "path": "data/Tables_1.dta",
+      "size_bytes": 8989,
+      "sha256": "793efb5da5a1b2487128bd253ebe37bb74cf55a85d6895874938a66ff1aeedef"
+    },
+    {
+      "path": "data/Tables_2_3_4_A1_A2_A3.do",
+      "size_bytes": 7417,
+      "sha256": "9368e760a7de9b89659050e203648ad2e2a7ce4a058ebabd273d37381f1c3f75"
+    },
+    {
+      "path": "data/Tables_2_3_4_A1_A2_A3.dta",
+      "size_bytes": 316741,
+      "sha256": "2fe66d32972299c90f1dffea0991e2ee3e491dc61f9dd55b2d63f4570f317097"
+    },
+    {
+      "path": "data/Tables_5_6_7_8.do",
+      "size_bytes": 2734,
+      "sha256": "ca279573630249e292dbca227f1d537f0515a8e2dba77151b25ac52b4456c96e"
+    },
+    {
+      "path": "data/Tables_5_6_7_8.dta",
+      "size_bytes": 234493,
+      "sha256": "81ba29f52bea147b825563feb4f24d3dfb82a75b6829f18079834eef0bffa4c0"
+    },
+    {
+      "path": "data/Tables_9.do",
+      "size_bytes": 983,
+      "sha256": "4da9ca746b6e666df6237582bc3f9dc6e0c3843f6acf8e4f160b1268b413210e"
+    },
+    {
+      "path": "data/Tables_9.dta",
+      "size_bytes": 164362,
+      "sha256": "0ea52381e062476931c9f97376041caee0938fb2867b72078ff8ba0b32b7ee37"
+    }
+  ]
+}

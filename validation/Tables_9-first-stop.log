@@ -1,0 +1,19 @@
+. use "Tables_9.dta", clear
+note: 2306 of 3427 observations contain at least one missing value
+note: source timestamp: 2019-07-19 10:24
+note: 1 value label set(s) loaded
+(17 vars, 3,427 obs)
+
+. foreach x in C Income Size {
+. g lC=log(C)
+
+. g lIncome=log(Income)
+
+. g lSize=log(Size)
+
+. quietly {
+Error: not found: "S2.lC" not found
+r(1);
+
+end of do-file
+r(1);

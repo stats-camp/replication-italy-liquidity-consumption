@@ -1,0 +1,140 @@
+. use "Tables_1.dta", clear
+note: source timestamp: 2019-07-19 10:39
+note: 3 variable label(s) loaded
+(6 vars, 11 obs)
+
+. describe
+
+Contains data from Tables_1.dta
+ Observations:            11                  
+    Variables:             6                  19 Jul 2019 10:39
+-------------------------------------------------------------------------------
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+-------------------------------------------------------------------------------
+Year            int     %9.0g                 
+Pop_Basilicata  long    %12.0fc               Basilicata Popolazione
+Pop_Campania    long    %12.0fc               Campania Popolazione
+Pop_Italia      long    %12.0fc               Italia Popolazione
+PopCamRel       float   %9.2fc                
+PopBasRel       float   %9.2fc                
+-------------------------------------------------------------------------------
+Sorted by: 
+
+. use "Tables_2_3_4_A1_A2_A3.dta", clear
+note: 3955 of 5945 observations contain at least one missing value
+note: source timestamp: 2019-07-17 23:19
+note: 1 value label set(s) loaded
+(20 vars, 5,945 obs)
+
+. describe
+
+Contains data from Tables_2_3_4_A1_A2_A3.dta
+ Observations:          5945                  
+    Variables:            20                  17 Jul 2019 23:19
+-------------------------------------------------------------------------------
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+-------------------------------------------------------------------------------
+Region          byte    %10.0g     regio      
+Year            int     %8.0g                 
+OO              float   %9.0g                 
+C               long    %10.0fc               
+Income          float   %10.0fc               
+Size            byte    %8.0g                 
+Earners         byte    %8.0g                 
+Head            byte    %8.0g                 
+Age             float   %9.0g                 
+Rent            float   %10.2fc               
+Education       byte    %8.0g                 
+Sector          byte    %8.0g                 
+Occupation1     byte    %8.0g                 
+Occupation2     byte    %8.0g                 
+Irr             long    %10.0fc               
+Pop             byte    %8.0g                 
+Wealth          float   %10.0fc               
+Employed        float   %9.0g                 
+Employee        float   %9.0g                 
+Value           long    %10.0fc               
+-------------------------------------------------------------------------------
+Sorted by: 
+
+. use "Tables_5_6_7_8.dta", clear
+note: 2004 of 3006 observations contain at least one missing value
+note: source timestamp: 2019-07-17 23:29
+note: 1 value label set(s) loaded
+(24 vars, 3,006 obs)
+
+. describe
+
+Contains data from Tables_5_6_7_8.dta
+ Observations:          3006                  
+    Variables:            24                  17 Jul 2019 23:29
+-------------------------------------------------------------------------------
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+-------------------------------------------------------------------------------
+Region          byte    %8.0g                 
+EMILIA          float   %9.0g                 
+AREA            float   %14.0g     area       
+Year            int     %8.0g                 
+OO              float   %9.0g                 
+C               long    %10.0fc               
+CF              long    %10.0fc               
+CO              long    %10.0fc               
+Income          float   %10.0fc               
+Size            byte    %8.0g                 
+Earners         byte    %8.0g                 
+Head            byte    %8.0g                 
+Age             int     %8.0g                 
+Education       byte    %8.0g                 
+Sectornew       byte    %8.0g                 
+Occupation1     byte    %8.0g                 
+Pop             byte    %8.0g                 
+INDEXLIQ        float   %9.0g                 
+nquest          long    %12.0g                
+Debt            double  %10.0fc               
+INDEXLIQ04      float   %9.0g                 
+INDEXLIQ03      float   %9.0g                 
+INDEXLIQ02      float   %9.0g                 
+Estate          float   %10.0fc               
+-------------------------------------------------------------------------------
+Sorted by: 
+
+. use "Tables_9.dta", clear
+note: 2306 of 3427 observations contain at least one missing value
+note: source timestamp: 2019-07-19 10:24
+note: 1 value label set(s) loaded
+(17 vars, 3,427 obs)
+
+. describe
+
+Contains data from Tables_9.dta
+ Observations:          3427                  
+    Variables:            17                  19 Jul 2019 10:24
+-------------------------------------------------------------------------------
+Variable      Storage   Display    Value
+    name         type    format    label      Variable label
+-------------------------------------------------------------------------------
+Region          byte    %8.0g                 
+ABRUZZO         float   %9.0g                 
+AREA            float   %12.0g     area       
+Year            int     %8.0g                 
+OO              float   %9.0g                 
+C               double  %10.0fc               
+Income          float   %10.0fc               
+Size            byte    %8.0g                 
+Earners         byte    %8.0g                 
+Head            byte    %8.0g                 
+Age             int     %8.0g                 
+Education       byte    %8.0g                 
+Sectornew       byte    %8.0g                 
+Occupation1     byte    %8.0g                 
+Pop             byte    %8.0g                 
+INDEXLIQ        float   %9.0g                 
+nquest          long    %12.0g                
+-------------------------------------------------------------------------------
+Sorted by: 
+
+. 
+end of do-file

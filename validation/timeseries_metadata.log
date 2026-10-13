@@ -1,0 +1,12 @@
+. use "Tables_5_6_7_8.dta", clear
+note: 2004 of 3006 observations contain at least one missing value
+note: source timestamp: 2019-07-17 23:29
+note: 1 value label set(s) loaded
+(24 vars, 3,006 obs)
+
+. tsset
+       panel variable:  nquest
+        time variable:  Year, 2008 to 2012
+
+. 
+end of do-file

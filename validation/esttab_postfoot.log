@@ -1,0 +1,29 @@
+. use "Tables_1.dta", clear
+note: source timestamp: 2019-07-19 10:39
+note: 3 variable label(s) loaded
+(6 vars, 11 obs)
+
+. eststo: reg PopCamRel Year
+
+      Source |       SS           df       MS      Number of obs   =        11
+-------------+----------------------------------   F(1, 9)         =   4581.23
+       Model |     .119879         1    .1198793   Prob > F        =    0.0000
+    Residual |     .000236         9    .0000262   R-squared       =    0.9980
+-------------+----------------------------------   Adj R-squared   =    0.9978
+       Total |     .120115        10    .0120115   Root MSE        =    .00512
+
+---------------------------------------------------------------------------------
+   PopCamRel | Coefficient  Std. err.      t    P>|t|     [95% conf. interval]
+-------------+------------------------------------------------------------------
+        Year |     .0330123   .0004877    67.68   0.000      .031909    .0341156
+       _cons |   -55.754427   .9657183    -57.73   0.000    -57.93903   -53.56982
+---------------------------------------------------------------------------------
+
+. esttab, postfoot(simple)
+Error: Parse error at byte 8: error: unknown option 'postfoot' for esttab; valid: b, se, t, z, p, ci, star, nostar, starlevels, ar2, stats, title, label, noobs, noconstant, keep, drop, order, mtitles, compress, varwidth, modelwidth, nonotes, addnotes, replace, indicate, noomitted, nonumbers
+  esttab, postfoot(simple)
+          ^
+r(1);
+
+end of do-file
+r(1);

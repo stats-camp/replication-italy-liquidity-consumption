@@ -1,0 +1,140 @@
+[
+  {
+    "probe": "table1_estpost",
+    "exit_status": 1,
+    "log": "validation/table1_estpost.log",
+    "diagnostic_script": "use \"Tables_1.dta\", clear\neststo clear\nestpost tabstat PopCamRel, columns(statistics) statistics(mean) by(Year) nototal\neststo\nestpost tabstat PopBasRel, columns(statistics) statistics(mean) by(Year) nototal\neststo\nesttab _all, label noobs nonumber mtitle(Campania Basilicata) cells(mean(fmt(%10.2fc))) title(Evolution of Population)\n"
+  },
+  {
+    "probe": "fvset",
+    "exit_status": 1,
+    "log": "validation/fvset.log",
+    "diagnostic_script": "use \"Tables_2_3_4_A1_A2_A3.dta\", clear\nfvset base 1979 Year\n"
+  },
+  {
+    "probe": "timeseries_metadata",
+    "exit_status": 0,
+    "log": "validation/timeseries_metadata.log",
+    "diagnostic_script": "use \"Tables_5_6_7_8.dta\", clear\ntsset\n"
+  },
+  {
+    "probe": "timeseries_lead",
+    "exit_status": 0,
+    "log": "validation/timeseries_lead.log",
+    "diagnostic_script": "use \"Tables_5_6_7_8.dta\", clear\ngen actual=f2.INDEXLIQ\nsummarize actual\n"
+  },
+  {
+    "probe": "timeseries_seasonal",
+    "exit_status": 1,
+    "log": "validation/timeseries_seasonal.log",
+    "diagnostic_script": "use \"Tables_5_6_7_8.dta\", clear\ngen lC=log(C)\ngen actual=s2.lC\nsummarize actual\n"
+  },
+  {
+    "probe": "timeseries_compound",
+    "exit_status": 1,
+    "log": "validation/timeseries_compound.log",
+    "diagnostic_script": "use \"Tables_5_6_7_8.dta\", clear\ngen lC=log(C)\ngen actual=l2.s2.lC\nsummarize actual\n"
+  },
+  {
+    "probe": "timeseries_regression",
+    "exit_status": 1,
+    "log": "validation/timeseries_regression.log",
+    "diagnostic_script": "use \"Tables_5_6_7_8.dta\", clear\ngen lC=log(C)\nreg s2.lC EMILIA if OO==1 & Year==2012, r\n"
+  },
+  {
+    "probe": "ordinary_regression",
+    "exit_status": 0,
+    "log": "validation/ordinary_regression.log",
+    "diagnostic_script": "use \"Tables_2_3_4_A1_A2_A3.dta\", clear\nkeep if Year==1980 | Year==1981\nkeep if Region==15 | Region==17\ng YEAR=(Year==1981)\ng DD=OO*YEAR\nreg Size DD OO YEAR\n"
+  },
+  {
+    "probe": "table2_segment",
+    "exit_status": 1,
+    "log": "validation/table2_segment.log",
+    "diagnostic_script": "clear all\nuse \"Tables_2_3_4_A1_A2_A3.dta\"\nset more off\n*\ngen lC =log(C)\ngen lIncome=log(Income)\ngen lSize=log(Size)\n*\n*TABLE 2\npreserve\nquietly {\nest clear\n\nkeep if Year==1980 | Year==1981\nkeep if Region==15 | Region==17\ng YEAR=(Year==1981)\ng DD=OO*YEAR\nlabel var DD \"Diff-in-Diff 1980-81\"\nlabel var OO \"Diff 1980\"\nest clear\nforeach x in Size Age Education Employed Employee Wealth Income {\neststo: regress `x' DD OO YEAR\n}\n}\nesttab _all, keep(DD OO) order(OO DD) b(1) ar2(2) label compress\nrestore\n"
+  },
+  {
+    "probe": "table3_segment",
+    "exit_status": 1,
+    "log": "validation/table3_segment.log",
+    "diagnostic_script": "clear all\nuse \"Tables_2_3_4_A1_A2_A3.dta\"\nset more off\n*\ngen lC =log(C)\ngen lIncome=log(Income)\ngen lSize=log(Size)\n*\npreserve\nquietly {\nest clear\nlabel var OO \"HS (Housing Status)\"\ngen ParkerYear = ((Region==15 & Year==1981)|(Region==17 & Year==1982))\nlabel var ParkerYear \"RF (Reconstruction Funds Region)\"\ngen OOcumTRANSFER= OO*ParkerYear\nlabel var OOcumTRANSFER \"HS*RF\"\n\ngen Year82=(Year==1982)\ngen Campania=(Region==15)\n\nkeep if Year>=1981 & Year<=1982\nkeep if Region==15 | Region==17\n\nlocal dumpanel Year82 Campania \nlocal controlli Income Size ///\nEarners Head Age Rent i.Education i.Sector i.Occupation1 i.Occupation2 i.Irr i.Pop\neststo: xi: reg C OOcumTRANSFER `dumpanel', r\neststo: xi: reg C OOcumTRANSFER OO ParkerYear `controlli' `dumpanel', r\neststo: xi: reg C OOcumTRANSFER `controlli' `dumpanel' if OO==1, r\n*\nlocal dumpanel Year82 Campania\nlocal controlli lIncome lSize ///\nEarners Head Age Rent i.Education i.Sector i.Occupation1 i.Occupation2 i.Irr i.Pop\neststo: xi: reg lC OOcumTRANSFER `dumpanel', r\neststo: xi: reg lC OOcumTRANSFER OO ParkerYear `controlli' `dumpanel', r\neststo: xi: reg lC OOcumTRANSFER `controlli' `dumpanel' if OO==1, r\n}\n*\nesttab , ar2(2) title(Consumption and Early Access to Reconstruction Funds) se star(* 0.10 ** 0.05 *** 0.01) ///\nkeep(OOcumTRANSFER ParkerYear OO) order(OOcumTRANSFER ParkerYear OO) b(2) label nomtitle nodepvar\nrestore\n"
+  },
+  {
+    "probe": "table4_segment",
+    "exit_status": 1,
+    "log": "validation/table4_segment.log",
+    "diagnostic_script": "clear all\nuse \"Tables_2_3_4_A1_A2_A3.dta\"\nset more off\n*\ngen lC =log(C)\ngen lIncome=log(Income)\ngen lSize=log(Size)\n*\n*TABLE 4\nquietly {\nest clear\ngen Quake_Area=(Region==15 | Region==17)\n\nlocal controlli i.Year ///\nEarners Head Age Rent i.Education i.Sector i.Occupation1 i.Occupation2 i.Irr i.Pop\nlocal residui r\nfvset base 1979 Year\n*\npreserve\ng QUAKE=(Quake_Area==1 & Year>=1981)\neststo: reg C QUAKE Quake_Area Income Size `controlli' if OO==1 & (Year>=1980 & Year<=1984), r\nrestore\n*\npreserve\ng QUAKE=(Quake_Area==1 & Year>=1981)\neststo: reg C QUAKE Quake_Area Income Size `controlli' if OO==1 & (Year>=1980 & Year<=1982), r\nrestore\n*\npreserve\ng QUAKE=(Quake_Area==1 & Year>=1983)\neststo: reg C QUAKE Quake_Area Income Size `controlli' if OO==1 & (Year>=1981 & Year<=1984), r\nrestore\n*\npreserve\ng QUAKE=(Quake_Area==1 & Year>=1981)\neststo: reg lC QUAKE Quake_Area lIncome lSize `controlli' if OO==1 & (Year>=1980 & Year<=1984), r\nrestore\n*\npreserve\ng QUAKE=(Quake_Area==1 & Year>=1981)\neststo: reg lC QUAKE Quake_Area lIncome lSize `controlli' if OO==1 & (Year>=1980 & Year<=1982), r\nrestore\n*\npreserve\ng QUAKE=(Quake_Area==1 & Year>=1983)\neststo: reg lC QUAKE Quake_Area lIncome lSize `controlli' if OO==1 & (Year>=1981 & Year<=1984), r\nrestore\n}\nesttab , title(The Medium-run Evolution of Consumption after the Earthquake) star(* 0.10 ** 0.05 *** 0.01) ///\nkeep(QUAKE) order(QUAKE) b(2) ar2(2) se label nomtitle nodepvar\n"
+  },
+  {
+    "probe": "tableA1_estpost",
+    "exit_status": 1,
+    "log": "validation/tableA1_estpost.log",
+    "diagnostic_script": "use \"Tables_2_3_4_A1_A2_A3.dta\", clear\nkeep if Year==1980 | Year==1981 | Year==1982\nkeep if Region==15 | Region==17\nby OO Year Region, sort: gen Observations = _N\neststo clear\nestpost tabstat Size Age Education Employed Employee Wealth Income Observations if OO==1 & Year==1980, columns(statistics) statistics(mean) by(Region) nototal\neststo\nesttab _all, label noobs nonumber mtitle(1980) cells(mean(fmt(%10.1fc %10.1fc %10.1fc %10.1fc %10.1fc %10.0fc %10.0fc %10.0fc))) title(Households Characteristics)\n"
+  },
+  {
+    "probe": "esttab_ar2_format",
+    "exit_status": 1,
+    "log": "validation/esttab_ar2_format.log",
+    "diagnostic_script": "use \"Tables_1.dta\", clear\neststo: reg PopCamRel Year\nesttab, ar2(2)\n"
+  },
+  {
+    "probe": "esttab_mean_cell",
+    "exit_status": 1,
+    "log": "validation/esttab_mean_cell.log",
+    "diagnostic_script": "use \"Tables_1.dta\", clear\neststo: reg PopCamRel Year\nesttab, cells(mean(fmt(%10.2fc)))\n"
+  },
+  {
+    "probe": "esttab_postfoot",
+    "exit_status": 1,
+    "log": "validation/esttab_postfoot.log",
+    "diagnostic_script": "use \"Tables_1.dta\", clear\neststo: reg PopCamRel Year\nesttab, postfoot(simple)\n"
+  },
+  {
+    "probe": "esttab_nodepvar",
+    "exit_status": 1,
+    "log": "validation/esttab_nodepvar.log",
+    "diagnostic_script": "use \"Tables_1.dta\", clear\neststo: reg PopCamRel Year\nesttab, nodepvar\n"
+  },
+  {
+    "probe": "esttab_nomtitle",
+    "exit_status": 1,
+    "log": "validation/esttab_nomtitle.log",
+    "diagnostic_script": "use \"Tables_1.dta\", clear\neststo: reg PopCamRel Year\nesttab, nomtitle\n"
+  },
+  {
+    "probe": "esttab_mtitle",
+    "exit_status": 0,
+    "log": "validation/esttab_mtitle.log",
+    "diagnostic_script": "use \"Tables_1.dta\", clear\neststo: reg PopCamRel Year\nesttab, mtitle(Campania)\n"
+  },
+  {
+    "probe": "esttab_standard_options",
+    "exit_status": 1,
+    "log": "validation/esttab_standard_options.log",
+    "diagnostic_script": "use \"Tables_1.dta\", clear\neststo: reg PopCamRel Year\nesttab, b(2) ar2 se star(* 0.10 ** 0.05 *** 0.01) keep(Year) order(Year) label compress title(Diagnostic Table)\n"
+  },
+  {
+    "probe": "table2_stored_models",
+    "exit_status": 0,
+    "log": "validation/table2_stored_models.log",
+    "diagnostic_script": "clear all\nuse \"Tables_2_3_4_A1_A2_A3.dta\"\nset more off\n*\ngen lC =log(C)\ngen lIncome=log(Income)\ngen lSize=log(Size)\n*\n*TABLE 2\npreserve\nquietly {\nest clear\n\nkeep if Year==1980 | Year==1981\nkeep if Region==15 | Region==17\ng YEAR=(Year==1981)\ng DD=OO*YEAR\nlabel var DD \"Diff-in-Diff 1980-81\"\nlabel var OO \"Diff 1980\"\nest clear\nforeach x in Size Age Education Employed Employee Wealth Income {\neststo: regress `x' DD OO YEAR\n}\n}\nest dir\n"
+  },
+  {
+    "probe": "xi_direct",
+    "exit_status": 0,
+    "log": "validation/xi_direct.log",
+    "diagnostic_script": "clear all\nuse \"Tables_2_3_4_A1_A2_A3.dta\"\nset more off\n*\ngen lC =log(C)\ngen lIncome=log(Income)\ngen lSize=log(Size)\n*\npreserve\nquietly {\nest clear\nlabel var OO \"HS (Housing Status)\"\ngen ParkerYear = ((Region==15 & Year==1981)|(Region==17 & Year==1982))\nlabel var ParkerYear \"RF (Reconstruction Funds Region)\"\ngen OOcumTRANSFER= OO*ParkerYear\nlabel var OOcumTRANSFER \"HS*RF\"\n\ngen Year82=(Year==1982)\ngen Campania=(Region==15)\n\nkeep if Year>=1981 & Year<=1982\nkeep if Region==15 | Region==17\n\nlocal dumpanel Year82 Campania \nlocal controlli Income Size ///\nEarners Head Age Rent i.Education i.Sector i.Occupation1 i.Occupation2 i.Irr i.Pop\nxi: reg C OOcumTRANSFER Year82 Campania, r\n}\n"
+  },
+  {
+    "probe": "table9_lead",
+    "exit_status": 0,
+    "log": "validation/table9_lead.log",
+    "diagnostic_script": "use \"Tables_9.dta\", clear\ntsset\ngen actual=f2.INDEXLIQ\nsummarize actual\n"
+  },
+  {
+    "probe": "all_datasets_load",
+    "exit_status": 0,
+    "log": "validation/all_datasets_load.log",
+    "diagnostic_script": "use \"Tables_1.dta\", clear\ndescribe\nuse \"Tables_2_3_4_A1_A2_A3.dta\", clear\ndescribe\nuse \"Tables_5_6_7_8.dta\", clear\ndescribe\nuse \"Tables_9.dta\", clear\ndescribe\n"
+  }
+]

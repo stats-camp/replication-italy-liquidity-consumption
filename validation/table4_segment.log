@@ -1,0 +1,24 @@
+. clear all
+
+. use "Tables_2_3_4_A1_A2_A3.dta"
+note: 3955 of 5945 observations contain at least one missing value
+note: source timestamp: 2019-07-17 23:19
+note: 1 value label set(s) loaded
+(20 vars, 5,945 obs)
+
+. set more off
+
+. gen lC =log(C)
+
+. gen lIncome=log(Income)
+
+. gen lSize=log(Size)
+
+. quietly {
+Error: Parse error at byte 0: error: unknown command 'fvset'. Did you mean 'set'?
+  fvset base 1979 Year
+  ^
+r(1);
+
+end of do-file
+r(1);

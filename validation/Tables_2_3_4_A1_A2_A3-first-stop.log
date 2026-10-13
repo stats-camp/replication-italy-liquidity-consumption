@@ -1,0 +1,6 @@
+Error: line 129: postfoot(\hline\hline\multicolumn{5}{p{10cm}} ///
+block header is missing before `{`
+r(1);
+
+end of do-file
+r(1);

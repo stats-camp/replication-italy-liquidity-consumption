@@ -1,0 +1,218 @@
+{
+  "package_id": 231539,
+  "version": "V1",
+  "audited_on": "2026-10-13",
+  "mode": "native stats_core; untouched original scripts copied into isolated /tmp directories, cwd=data; isolated diagnostic commands and original script segments are recorded in probes.json",
+  "engine": {
+    "binary": "stats_core/target/debug/stats_core",
+    "binary_size_bytes": 1635184184,
+    "binary_sha256": "e3444b13468b956dab9df17c8019b879dc6998ca6932b6dd368e62d6d88e30c1"
+  },
+  "original_file_integrity": {
+    "verified": true,
+    "verified_files": 11,
+    "do_files_modified": 0,
+    "data_files_modified": 0,
+    "structure_preserved": true
+  },
+  "references": {
+    "paper": "https://www.aeaweb.org/articles?id=10.1257/mac.20180190",
+    "deposit": "https://www.openicpsr.org/openicpsr/project/231539/version/V1/view",
+    "deposit_metadata_note": "Primary openICPSR page could not be fetched by web tool or host curl; authors confirmed by original Readme.tex and AEA paper page. Package id/version and archive content use local deposited archive.",
+    "fresh_stata_parity": false,
+    "stata_note": "Installed Stata license expired; archive includes no reference output transcript."
+  },
+  "entrypoints": [
+    {
+      "path": "data/Tables_1.do",
+      "target_outputs": [
+        "Table 1"
+      ],
+      "status": "blocked-before-execution",
+      "first_blocker": {
+        "line": 13,
+        "error": "block header is missing before `{`",
+        "return_code": 1,
+        "feature": "continued esttab postfoot LaTeX brace handling"
+      },
+      "log": "validation/Tables_1-first-stop.log"
+    },
+    {
+      "path": "data/Tables_2_3_4_A1_A2_A3.do",
+      "target_outputs": [
+        "Tables 2, 3, 4, A1, A2, A3"
+      ],
+      "status": "blocked-before-execution",
+      "first_blocker": {
+        "line": 129,
+        "error": "block header is missing before `{`",
+        "return_code": 1,
+        "feature": "continued esttab postfoot LaTeX brace handling"
+      },
+      "log": "validation/Tables_2_3_4_A1_A2_A3-first-stop.log"
+    },
+    {
+      "path": "data/Tables_5_6_7_8.do",
+      "target_outputs": [
+        "Tables 5, 6, 7, 8"
+      ],
+      "status": "partial-preparation-only",
+      "first_blocker": {
+        "source_line": 20,
+        "error": "not found: \"S2.lC\" not found",
+        "return_code": 1,
+        "feature": "seasonal difference dependent variable"
+      },
+      "log": "validation/Tables_5_6_7_8-first-stop.log"
+    },
+    {
+      "path": "data/Tables_9.do",
+      "target_outputs": [
+        "Table 9"
+      ],
+      "status": "partial-preparation-only",
+      "first_blocker": {
+        "source_line": 19,
+        "error": "not found: \"S2.lC\" not found",
+        "return_code": 1,
+        "feature": "seasonal difference dependent variable"
+      },
+      "log": "validation/Tables_9-first-stop.log"
+    }
+  ],
+  "confirmed_working": [
+    {
+      "feature": "read and describe all four .dta files",
+      "evidence": "validation/all_datasets_load.log",
+      "datasets": [
+        {
+          "path": "data/Tables_1.dta",
+          "observations": 11,
+          "variables": 6
+        },
+        {
+          "path": "data/Tables_2_3_4_A1_A2_A3.dta",
+          "observations": 5945,
+          "variables": 20
+        },
+        {
+          "path": "data/Tables_5_6_7_8.dta",
+          "observations": 3006,
+          "variables": 24
+        },
+        {
+          "path": "data/Tables_9.dta",
+          "observations": 3427,
+          "variables": 17
+        }
+      ]
+    },
+    {
+      "feature": "Table 2 original initial segment executes and stores all seven OLS models",
+      "evidence": "validation/table2_stored_models.log",
+      "dependent_variables": [
+        "Size",
+        "Age",
+        "Education",
+        "Employed",
+        "Employee",
+        "Wealth",
+        "Income"
+      ]
+    },
+    {
+      "feature": "clear/use, generate and logarithms, local/foreach/quietly blocks, filtering, preserve, by-sort group counts, variable labels, est clear/eststo",
+      "evidence": [
+        "validation/table2_stored_models.log",
+        "validation/tableA1_estpost.log",
+        "validation/Tables_5_6_7_8-first-stop.log"
+      ]
+    },
+    {
+      "feature": "use restores panel nquest/time Year characteristics; f2.INDEXLIQ lead evaluation succeeds in both panel datasets",
+      "evidence": [
+        "validation/timeseries_metadata.log",
+        "validation/timeseries_lead.log",
+        "validation/table9_lead.log"
+      ]
+    },
+    {
+      "feature": "direct xi: reg C OOcumTRANSFER Year82 Campania, r succeeds",
+      "evidence": "validation/xi_direct.log"
+    },
+    {
+      "feature": "esttab mtitle() abbreviation succeeds on a stored OLS model",
+      "evidence": "validation/esttab_mtitle.log"
+    }
+  ],
+  "confirmed_gaps": [
+    {
+      "id": "IT-1",
+      "feature": "LaTeX braces in continued postfoot options must not be treated as program blocks",
+      "evidence": [
+        "validation/Tables_1-first-stop.log",
+        "validation/Tables_2_3_4_A1_A2_A3-first-stop.log"
+      ]
+    },
+    {
+      "id": "IT-2",
+      "feature": "s2 seasonal differences in expressions and regressions; compound l2.s2 operations",
+      "evidence": [
+        "validation/timeseries_seasonal.log",
+        "validation/timeseries_compound.log",
+        "validation/timeseries_regression.log"
+      ]
+    },
+    {
+      "id": "IT-3",
+      "feature": "fvset base 1979 Year",
+      "evidence": "validation/fvset.log"
+    },
+    {
+      "id": "IT-4",
+      "feature": "eststo: xi: reg nested prefixes",
+      "evidence": "validation/table3_segment.log",
+      "error": "internal error: wrapped xi passed to standalone handler; r(198)"
+    },
+    {
+      "id": "IT-5",
+      "feature": "estpost tabstat ..., columns(statistics) statistics(mean) by(...) nototal",
+      "evidence": [
+        "validation/table1_estpost.log",
+        "validation/tableA1_estpost.log"
+      ]
+    },
+    {
+      "id": "IT-6",
+      "feature": "esttab numeric decimal shorthands b(1), b(2), ar2(2)",
+      "evidence": [
+        "validation/esttab_standard_options.log",
+        "validation/esttab_ar2_format.log"
+      ]
+    },
+    {
+      "id": "IT-7",
+      "feature": "esttab cells(mean(fmt(...))), postfoot(...), nodepvar, nomtitle options",
+      "evidence": [
+        "validation/esttab_mean_cell.log",
+        "validation/esttab_postfoot.log",
+        "validation/esttab_nodepvar.log",
+        "validation/esttab_nomtitle.log"
+      ]
+    }
+  ],
+  "unverified": [
+    "No complete original table-producing script runs successfully.",
+    "No numerical parity against fresh Stata or published tables is claimed.",
+    "Factor-variable base selection and robust regression/table output after blockers remain to be checked.",
+    "Browser/Wasm execution has not been separately audited; browser working-directory/path setup is pending because cd is unsupported."
+  ],
+  "probe_index": "validation/probes.json",
+  "browser_setup": {
+    "status": "pending",
+    "required_working_directory": "data/",
+    "browser_repository_root": "/repo",
+    "current_gap": "cd is explicitly unsupported under wasm32; runner working-directory or runtime path support is required for unchanged bare dataset filenames",
+    "evidence": "stats_core/src/commands/cd/mod.rs:57-60 (source inspection; no separate browser execution performed)"
+  }
+}

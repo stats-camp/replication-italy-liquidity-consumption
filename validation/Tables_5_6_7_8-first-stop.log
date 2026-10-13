@@ -1,0 +1,25 @@
+. use "Tables_5_6_7_8.dta", clear
+note: 2004 of 3006 observations contain at least one missing value
+note: source timestamp: 2019-07-17 23:29
+note: 1 value label set(s) loaded
+(24 vars, 3,006 obs)
+
+. foreach x in C CF CO Income Size {
+. g lC=log(C)
+
+. g lCF=log(CF)
+
+. g lCO=log(CO)
+
+. g lIncome=log(Income)
+
+. g lSize=log(Size)
+
+. local controlli s2.lIncome s2.lSize s2.Earners Head Age i.Education i.Sectornew i.Occupation1 i.Pop
+
+. quietly {
+Error: not found: "S2.lC" not found
+r(1);
+
+end of do-file
+r(1);

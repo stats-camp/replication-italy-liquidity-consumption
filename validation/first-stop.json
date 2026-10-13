@@ -1,0 +1,26 @@
+[
+  {
+    "script": "data/Tables_1.do",
+    "exit_status": 1,
+    "log": "validation/Tables_1-first-stop.log",
+    "transcript": "Error: line 13: postfoot(\\hline\\hline\\multicolumn{3}{p{12cm}} ///\nblock header is missing before `{`\nr(1);\n\nend of do-file\nr(1);\n"
+  },
+  {
+    "script": "data/Tables_2_3_4_A1_A2_A3.do",
+    "exit_status": 1,
+    "log": "validation/Tables_2_3_4_A1_A2_A3-first-stop.log",
+    "transcript": "Error: line 129: postfoot(\\hline\\hline\\multicolumn{5}{p{10cm}} ///\nblock header is missing before `{`\nr(1);\n\nend of do-file\nr(1);\n"
+  },
+  {
+    "script": "data/Tables_5_6_7_8.do",
+    "exit_status": 1,
+    "log": "validation/Tables_5_6_7_8-first-stop.log",
+    "transcript": ". use \"Tables_5_6_7_8.dta\", clear\nnote: 2004 of 3006 observations contain at least one missing value\nnote: source timestamp: 2019-07-17 23:29\nnote: 1 value label set(s) loaded\n(24 vars, 3,006 obs)\n\n. foreach x in C CF CO Income Size {\n. g lC=log(C)\n\n. g lCF=log(CF)\n\n. g lCO=log(CO)\n\n. g lIncome=log(Income)\n\n. g lSize=log(Size)\n\n. local controlli s2.lIncome s2.lSize s2.Earners Head Age i.Education i.Sectornew i.Occupation1 i.Pop\n\n. quietly {\nError: not found: \"S2.lC\" not found\nr(1);\n\nend of do-file\nr(1);\n"
+  },
+  {
+    "script": "data/Tables_9.do",
+    "exit_status": 1,
+    "log": "validation/Tables_9-first-stop.log",
+    "transcript": ". use \"Tables_9.dta\", clear\nnote: 2306 of 3427 observations contain at least one missing value\nnote: source timestamp: 2019-07-19 10:24\nnote: 1 value label set(s) loaded\n(17 vars, 3,427 obs)\n\n. foreach x in C Income Size {\n. g lC=log(C)\n\n. g lIncome=log(Income)\n\n. g lSize=log(Size)\n\n. quietly {\nError: not found: \"S2.lC\" not found\nr(1);\n\nend of do-file\nr(1);\n"
+  }
+]
