@@ -71,3 +71,14 @@ No complete table script passed in the audited engine. The deposit provides
 no output transcript, and the local Stata license has expired, so a fresh Stata
 numerical comparison remains outstanding. No do-file was changed and no engine
 feature was implemented for this package preparation.
+
+## Validation against Stata (2026-10-14)
+
+Stata 19.5 and the engine ran the four unchanged scripts from scratch copies of
+`data/` without errors. After fixing `eststo` ordering (sets listed
+alphabetically, columns permuted in Tables 5–8), naming `estpost tabstat`'s
+`by()` groups by their value labels (Stata's equation names, "Emilia Romagna"
+rather than "0") and printing `estpost` results in Stata's `matlist` layout,
+every number in Tables 1, 2, 3, 4, A1, A2, A3, 5, 6, 7, 8 and 9 equals Stata's,
+and with row labels abbreviated to the label width (`Diff-in-Diff ~81`) and
+rules between equation blocks the printed tables are identical line for line.
