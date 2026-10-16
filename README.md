@@ -8,14 +8,15 @@ Programs in Italy,” *American Economic Journal: Macroeconomics* 12 (3): 319–
 This stats.camp package preserves version V1 of AEA/openICPSR package **231539**.
 The study uses reconstruction programs following Italian earthquakes to examine
 how access to liquidity affects homeowners’ consumption. **Every original
-file, including all four do-files and datasets, is unchanged.** Missing engine
-features are recorded in [TODO.md](TODO.md); no workaround was inserted into
-the authors’ analysis.
+file, including all four do-files and datasets, is unchanged.** All twelve
+tables now replicate in stats.camp; the validation record and the remaining
+browser check are in [TODO.md](TODO.md). No workaround was inserted into the
+authors’ analysis.
 
 **Open in stats.camp:**
 [Table 1 script](https://stats.camp/app?open=https%3A%2F%2Fgithub.com%2Fstats-camp%2Freplication-italy-liquidity-consumption.git&file=data%2FTables_1.do).
-Opening a script does not make the full replication runnable; the current
-blockers are documented below.
+The native engine reproduces every table from the unchanged scripts; only the
+browser working-directory setup remains to be verified (see below).
 
 ## Files and launch directory
 
@@ -45,43 +46,33 @@ do Tables_1.do
 
 Run the other three scripts the same way, selecting their original filenames.
 For native stats_core checks, launch the executable from a scratch copy of the
-`data/` directory. The browser opens the repository at `/repo` and currently
-rejects `cd`; its runner still needs working-directory or runtime path support
-for these relative filenames. Opening `data/Tables_1.do` is available for
-inspection, but does not provide that setup or a successful replication run.
-The scripts depend on the user-written
+`data/` directory; `cd` is also implemented in the engine. The browser opens
+the repository at `/repo`, and its working-directory handling for these bare
+filenames has not been verified yet. The scripts depend on the user-written
 [estout suite](https://repec.sowi.unibe.ch/stata/estout/index.html)
-(`estpost`, `eststo`, `esttab`), which is not bundled in the deposit.
-Install that suite in the external Stata environment when doing an independent
-Stata run. This dependency does not resolve stats.camp’s implementation gaps.
+(`estpost`, `eststo`, `esttab`), which is not bundled in the deposit. Install
+that suite in the external Stata environment when doing an independent Stata
+run; stats.camp provides these commands itself.
 
 ## What runs in stats.camp
 
-Native audit on **2026-10-13**: all four datasets load and describe successfully.
-The original Table 2 segment fits and stores seven OLS models. Data filtering,
-logarithms, local macros, loops, quiet blocks, preservation, variable labels,
-and grouped observation counts execute in the probes. Direct `xi: reg ..., r`
-succeeds, and stored estimation results can be listed.
+All four untouched scripts run from `data/` without errors. On 2026-10-14 and
+again on 2026-10-15 they were executed in Stata 19.5 and in the native engine
+on scratch copies, and every number in Tables 1, 2, 3, 4, A1, A2, A3, 5, 6,
+7, 8 and 9 is equal (132 of 132 result rows, compared at the displayed
+precision). This covers the seasonal and compound time-series operators
+(`s2.lC`, `l2.s2.lC`), `fvset base`, nested `eststo: xi: reg`, `estpost
+tabstat ... by()` with value-labelled groups, the `esttab` shorthand (`b(2)`,
+`ar2(2)`, `cells()`, `postfoot()` with LaTeX braces, `nodepvar`, `nomtitle`)
+and the printed table layout (row labels abbreviated with `~`, rules between
+equation blocks).
 
-The two panel datasets restore their `nquest`/`Year` declarations on load.
-The `f2.INDEXLIQ` expressions execute in both. A simple stored-regression
-`esttab, mtitle(...)` also executes. These command-level checks are partial
-execution evidence, not a validation of all published results.
+Note for Stata comparisons: at Stata's default `linesize` of 80 the console
+truncates the wide `esttab` tables; use `set linesize 255` before running the
+scripts. The engine prints the full width.
 
-**No complete table-producing script currently finishes:**
-
-| Untouched script | First stopping point |
-| --- | --- |
-| `Tables_1.do` | Parsing line 13: LaTeX braces in `postfoot(...)` are mistaken for a program block, before any command executes |
-| `Tables_2_3_4_A1_A2_A3.do` | Same parser issue at line 129, before execution |
-| `Tables_5_6_7_8.do` | First regression, line 20: `s2.lC` cannot be evaluated |
-| `Tables_9.do` | First regression, line 19: `s2.lC` cannot be evaluated |
-
-Isolated probes reveal later blockers too: `estpost` and `fvset` are unknown;
-`eststo: xi: reg` fails when the prefixes are nested; `esttab` rejects the
-scripts’ decimal-format shorthands and several summary/table options.
-[TODO.md](TODO.md) lists the confirmed gaps and the checks required after
-implementing them.
+The 2026-10-13 audit transcripts under `validation/` predate these engine
+features and are kept as history; [TODO.md](TODO.md) lists what was fixed.
 
 ## Audit and source integrity
 
@@ -101,9 +92,9 @@ byte for byte against `231539-V1.zip` after auditing. Archive SHA-256:
 ad6f8d2178e4606ad16b513f12852539623c3e6b0d2a0b69a1c6aeb6a698daa0
 ```
 
-There is no deposited output transcript. A fresh Stata comparison was
-unavailable because the installed license has expired. Numerical parity,
-complete table formatting, and a separate browser/Wasm run remain unverified.
+There is no deposited output transcript. The numerical reference is the
+Stata 19.5 run of 2026-10-14/15 described above; the engine's results equal
+it. A separate browser/Wasm run remains unverified.
 
 ## Source, attribution, and license
 

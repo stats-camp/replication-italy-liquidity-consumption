@@ -82,3 +82,9 @@ rather than "0") and printing `estpost` results in Stata's `matlist` layout,
 every number in Tables 1, 2, 3, 4, A1, A2, A3, 5, 6, 7, 8 and 9 equals Stata's,
 and with row labels abbreviated to the label width (`Diff-in-Diff ~81`) and
 rules between equation blocks the printed tables are identical line for line.
+
+## Re-validation (2026-10-15)
+
+- [x] All four unchanged scripts rerun in Stata 19.5 (`set linesize 255`) and
+  in the engine; 132 of 132 result rows equal, every table identical.
+- [ ] Verify the browser working-directory setup and all four entry points.
