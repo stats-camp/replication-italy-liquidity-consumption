@@ -1,0 +1,35 @@
+. set more off
+
+. set linesize 255
+
+. do "Tables_9.do", nostop
+. use "Tables_9.dta", clear
+note: 2306 of 3427 observations contain at least one missing value
+note: source timestamp: 2019-07-19 10:24
+note: 1 value label set(s) loaded
+(17 vars, 3,427 obs)
+. foreach x in C Income Size {
+. g lC=log(C)
+. g lIncome=log(Income)
+. g lSize=log(Size)
+. quietly {
+. esttab , b(2) label ar2(2) se star(* 0.10 ** 0.05 *** 0.01) keep(ABRUZZO C1 ILLIQUIDI2010) order(ABRUZZO ILLIQUIDI2010 C1) nodepvar mtitle("ALL" "ALL" "ILLIQ=0" "ILLIQ=1") title(Consumption and In-kind Reconstruction Funds)
+Consumption and In-kind Reconstruction Funds
+------------------------------------------------------------------------------------
+                              (1)             (2)             (3)             (4)   
+                              ALL             ALL         ILLIQ=0         ILLIQ=1   
+------------------------------------------------------------------------------------
+ABRUZZO                      0.03            0.06            0.00            0.07   
+                           (0.04)          (0.04)          (0.20)          (0.04)   
+ILLIQUID-DEBT                0.03            0.03                                   
+                           (0.04)          (0.03)                                   
+ILLIQUID-DEBT * AB~O        -0.08           -0.05                                   
+                           (0.21)          (0.18)                                   
+------------------------------------------------------------------------------------
+Observations                  861             861             158             703   
+Adjusted R-squared           0.09            0.23            0.23            0.23   
+------------------------------------------------------------------------------------
+Standard errors in parentheses
+* p<0.10, ** p<0.05, *** p<0.01
+. 
+end of do-file

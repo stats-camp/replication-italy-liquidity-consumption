@@ -1,0 +1,73 @@
+. set more off
+
+. set linesize 255
+
+. do "Tables_1.do", nostop
+. clear all
+. use "Tables_1.dta"
+note: source timestamp: 2019-07-19 10:39
+note: 3 variable label(s) loaded
+(6 vars, 11 obs)
+. eststo clear
+. estpost tabstat PopCamRel, columns(statistics) statistics(mean) by(Year) nototal
+
+Summary statistics: mean
+     for variables: PopCamRel
+  by categories of: Year
+
+        Year |   e(mean) 
+-------------+-----------
+        1975 |  9.445857 
+        1976 |  9.472524 
+        1977 |  9.514155 
+        1978 |  9.545968 
+        1979 |  9.578649 
+        1980 |  9.613785 
+        1981 |  9.644674 
+        1982 |   9.66422 
+        1983 |  9.705818 
+        1984 |  9.744873 
+        1985 |  9.778745
+. eststo
+(est1 stored)
+. estpost tabstat PopBasRel, columns(statistics) statistics(mean) by(Year) nototal
+
+Summary statistics: mean
+     for variables: PopBasRel
+  by categories of: Year
+
+        Year |   e(mean) 
+-------------+-----------
+        1975 |  1.101652 
+        1976 |  1.098472 
+        1977 |  1.095693 
+        1978 |  1.092658 
+        1979 |   1.08927 
+        1980 |  1.085734 
+        1981 |  1.082137 
+        1982 |   1.07815 
+        1983 |  1.078439 
+        1984 |  1.078369 
+        1985 |  1.079778
+. eststo
+(est2 stored)
+. esttab _all, label noobs nonumber mtitle(Campania Basilicata) cells(mean(fmt(%10.2fc))) title(Evolution of Population) postfoot(\hline\hline\multicolumn{3}{p{12cm}} {\footnotesize Note: The table reports the evolution of population in the earthquake area around the year of the earthquake.} Values are expressed as percentage points of Italian population. Source is ISTAT. \end{tabular}\end{table})
+Evolution of Population
+----------------------------------------------
+                         Campania   Basilicata
+                             mean         mean
+----------------------------------------------
+1975                         9.45         1.10
+1976                         9.47         1.10
+1977                         9.51         1.10
+1978                         9.55         1.09
+1979                         9.58         1.09
+1980                         9.61         1.09
+1981                         9.64         1.08
+1982                         9.66         1.08
+1983                         9.71         1.08
+1984                         9.74         1.08
+1985                         9.78         1.08
+\hline\hline\multicolumn{3}{p{12cm}} {\footnotesize Note: The table reports the evolution of population in the earthquake area around the year of the earthquake.} Values are expressed as percentage points of Italian population. Source is ISTAT. \end{tabular}\end{table}
+. 
+end of do-file

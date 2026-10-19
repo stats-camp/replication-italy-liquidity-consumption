@@ -1,0 +1,127 @@
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  drv
+       log:  /tmp/claude-1000/-home-philipp-strack-Schreibtisch-stats/ebfedced-8cc9-4d77-80c0-168f6bf83dd0/scratchpad/ws/logs/stata_italy_3.log
+  log type:  text
+ opened on:  17 Oct 2026, 23:41:37
+
+. do "Tables_5_6_7_8.do", nostop
+
+. use "Tables_5_6_7_8.dta", clear
+
+. 
+. foreach x in C CF CO Income Size {
+  2. g l`x'=log(`x')
+  3. }
+(19 missing values generated)
+
+. *
+. local controlli s2.lIncome s2.lSize s2.Earners Head Age i.Education i.Sectornew i.Occupation1 i.Pop
+
+. 
+. *TABLE 5
+. quietly {
+
+. esttab , b(2) label ar2(2) se star(* 0.10 ** 0.05 *** 0.01) ///
+> keep(EMILIA C1 ILLIQUIDI2012) order(EMILIA ILLIQUIDI2012 C1) nodepvar mtitle("ALL" "ALL" "ILLIQ=0" "ILLIQ=1") ///
+> title(Consumption, Liquidity, and Reconstruction Funds)
+
+Consumption, Liquidity, and Reconstruction Funds
+------------------------------------------------------------------------------------
+                              (1)             (2)             (3)             (4)   
+                              ALL             ALL         ILLIQ=0         ILLIQ=1   
+------------------------------------------------------------------------------------
+EMILIA                       0.02            0.05*           0.24***         0.06*  
+                           (0.03)          (0.03)          (0.06)          (0.03)   
+
+ILLIQUID-DEBT               -0.06           -0.04                                   
+                           (0.04)          (0.04)                                   
+
+ILLIQUID-DEBT*EMILIA         0.17**          0.16**                                 
+                           (0.07)          (0.06)                                   
+------------------------------------------------------------------------------------
+Observations                  798             798             164             634   
+Adjusted R-squared           0.10            0.28            0.44            0.26   
+------------------------------------------------------------------------------------
+Standard errors in parentheses
+* p<0.10, ** p<0.05, *** p<0.01
+
+. 
+. *TABLE 6
+. quietly {
+
+. esttab , b(2) label ar2(2) se star(* 0.10 ** 0.05 *** 0.01) ///
+> keep(EMILIA) nodepvar mtitle("Food" "Food" "Others" "others") ///
+> title(Food and other Nondurables)
+
+Food and other Nondurables
+------------------------------------------------------------------------------------
+                              (1)             (2)             (3)             (4)   
+                             Food            Food          Others          others   
+------------------------------------------------------------------------------------
+EMILIA                       0.15**          0.07**          0.31***         0.05   
+                           (0.06)          (0.03)          (0.10)          (0.05)   
+------------------------------------------------------------------------------------
+Observations                  164             634             162             625   
+Adjusted R-squared           0.33            0.27            0.29            0.24   
+------------------------------------------------------------------------------------
+Standard errors in parentheses
+* p<0.10, ** p<0.05, *** p<0.01
+
+. 
+. *TABLE 7
+. quietly {
+
+. esttab , b(2) compress label ar2(2) se star(* 0.10 ** 0.05 *** 0.01) ///
+> keep(EMILIA) nodepvar mtitle("0.4" "0.3" "0.2") ///
+> title(Further Results for Consumption and Liquidity)
+
+Further Results for Consumption and Liquidity
+-------------------------------------------------------
+                       (1)          (2)          (3)   
+                       0.4          0.3          0.2   
+-------------------------------------------------------
+EMILIA                0.23***      0.27***      0.24***
+                    (0.06)       (0.07)       (0.08)   
+-------------------------------------------------------
+Observations           155          136          107   
+Adjusted R-squ~d      0.42         0.45         0.45   
+-------------------------------------------------------
+Standard errors in parentheses
+* p<0.10, ** p<0.05, *** p<0.01
+
+. 
+. *TABLE 8
+. quietly {
+
+. *
+. esttab _all, cells(mean(fmt(%10.1fc ))) nodepvar label mtitle(2008 2010 2012) ///
+> title(Evolution of Debt around the Earthquake Year)
+
+Evolution of Debt around the Earthquake Year
+-----------------------------------------------------------
+                              (1)          (2)          (3)
+                             2008         2010         2012
+                             mean         mean         mean
+-----------------------------------------------------------
+Emilia Romagna                                             
+Number of Households         51.0         53.0         53.0
+Debt                     57,246.2     70,611.3     63,656.3
+Debt to Income              120.0        131.3        118.1
+-----------------------------------------------------------
+Control Area                                               
+Number of Households        144.0        136.0        106.0
+Debt                     42,191.8     40,379.2     52,162.5
+Debt to Income               95.9         90.5        124.5
+-----------------------------------------------------------
+Observations                  195          189          159
+-----------------------------------------------------------
+
+. 
+end of do-file
+
+. log close drv
+      name:  drv
+       log:  /tmp/claude-1000/-home-philipp-strack-Schreibtisch-stats/ebfedced-8cc9-4d77-80c0-168f6bf83dd0/scratchpad/ws/logs/stata_italy_3.log
+  log type:  text
+ closed on:  17 Oct 2026, 23:41:38
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

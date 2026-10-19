@@ -1,11 +1,22 @@
-# Missing features and verification tasks
+# Replication verification tasks
+
+## Status 2026-10-17
+
+All scripts were rerun in StataNow 19.5 and the engine CLI (see the repository-level [REPLICATION_TODO.md](../../REPLICATION_TODO.md) for the method). Transcripts: `validation/stata-2026-10-17-*.log`, `validation/engine-2026-10-17-*.log`.
+
+- [x] Runs end to end in the engine; 88 aligned result rows (267 numbers), 0 differing; 0 rows only in Stata's and 0 only in the engine's transcript. Errors: none.
+- [x] Adaptations: All four unchanged scripts run from `data/`.
+- [ ] Verify the `data/` working directory and the four entry points in the browser.
+- [ ] Verify in the browser build.
+
+## History (2026-10-16 and earlier; superseded where the status above differs)
 
 Audit date: 2026-10-13. Preserve the deposited scripts and data while addressing
 these features in the stats.camp engine. Evidence and diagnostic snippets are
 indexed in [validation/audit.json](validation/audit.json) and
 [validation/probes.json](validation/probes.json).
 
-## Confirmed engine gaps
+### Confirmed engine gaps
 
 - [ ] **IT-1 — Parse continued table options containing LaTeX braces.**
   `Tables_1.do:13` and `Tables_2_3_4_A1_A2_A3.do:129` fail before execution:
@@ -48,7 +59,7 @@ indexed in [validation/audit.json](validation/audit.json) and
   lists in A1, `%...fc` displays, and the original multi-model/table layout.
   The `mtitle(...)` abbreviation already works on a stored regression.
 
-## Checks still required after the blockers are resolved
+### Checks still required after the blockers are resolved
 
 These are verification tasks, not additional features known to be missing.
 
@@ -72,7 +83,7 @@ no output transcript, and the local Stata license has expired, so a fresh Stata
 numerical comparison remains outstanding. No do-file was changed and no engine
 feature was implemented for this package preparation.
 
-## Validation against Stata (2026-10-14)
+### Validation against Stata (2026-10-14)
 
 Stata 19.5 and the engine ran the four unchanged scripts from scratch copies of
 `data/` without errors. After fixing `eststo` ordering (sets listed
@@ -83,7 +94,7 @@ every number in Tables 1, 2, 3, 4, A1, A2, A3, 5, 6, 7, 8 and 9 equals Stata's,
 and with row labels abbreviated to the label width (`Diff-in-Diff ~81`) and
 rules between equation blocks the printed tables are identical line for line.
 
-## Re-validation (2026-10-15)
+### Re-validation (2026-10-15)
 
 - [x] All four unchanged scripts rerun in Stata 19.5 (`set linesize 255`) and
   in the engine; 132 of 132 result rows equal, every table identical.

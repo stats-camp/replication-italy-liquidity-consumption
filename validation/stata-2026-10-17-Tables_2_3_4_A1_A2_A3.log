@@ -1,0 +1,228 @@
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      name:  drv
+       log:  /tmp/claude-1000/-home-philipp-strack-Schreibtisch-stats/ebfedced-8cc9-4d77-80c0-168f6bf83dd0/scratchpad/ws/logs/stata_italy_2.log
+  log type:  text
+ opened on:  17 Oct 2026, 23:41:36
+
+. do "Tables_2_3_4_A1_A2_A3.do", nostop
+
+. clear all
+
+. use "Tables_2_3_4_A1_A2_A3.dta"
+
+. set more off
+
+. *
+. gen lC =log(C)
+
+. gen lIncome=log(Income)
+
+. gen lSize=log(Size)
+
+. *
+. *TABLE 2
+. preserve
+
+. quietly {
+
+. esttab _all, keep(DD OO) order(OO DD) b(1) ar2(2) label compress
+
+-----------------------------------------------------------------------------------------------------------
+                       (1)          (2)          (3)          (4)          (5)          (6)          (7)   
+                      Size          Age    Education     Employed     Employee       Wealth       Income   
+-----------------------------------------------------------------------------------------------------------
+Diff 1980              0.1          5.3***       0.2         -2.8        -17.3**    69419.1***    3421.8***
+                    (0.73)       (3.33)       (1.31)      (-0.54)      (-2.99)       (7.50)       (3.91)   
+
+Diff-in-Diff ~81      -0.2          0.7          0.1         -0.0          2.3      17436.9        304.4   
+                   (-0.64)       (0.32)       (0.50)      (-0.00)       (0.29)       (1.39)       (0.26)   
+-----------------------------------------------------------------------------------------------------------
+Observations           669          669          669          669          669          669          669   
+Adjusted R-squ~d     -0.00         0.04         0.01         0.01         0.02         0.19         0.08   
+-----------------------------------------------------------------------------------------------------------
+t statistics in parentheses
+* p<0.05, ** p<0.01, *** p<0.001
+
+. restore
+
+. 
+. *TABLE 3
+. preserve
+
+. quietly {
+
+. *
+. esttab , ar2(2) title(Consumption and Early Access to Reconstruction Funds) se star(* 0.10 ** 0.05 *** 0.01) ///
+> keep(OOcumTRANSFER ParkerYear OO) order(OOcumTRANSFER ParkerYear OO) b(2) label nomtitle nodepvar
+
+Consumption and Early Access to Reconstruction Funds
+--------------------------------------------------------------------------------------------------------------------
+                              (1)             (2)             (3)             (4)             (5)             (6)   
+--------------------------------------------------------------------------------------------------------------------
+HS*RF                     1081.82***      1127.77***      1400.23***         0.15***         0.15**          0.13** 
+                         (304.81)        (429.77)        (459.37)          (0.05)          (0.06)          (0.05)   
+
+RF (Reconstruction~)                      -255.23                                           -0.06                   
+                                         (392.77)                                          (0.04)                   
+
+HS (Housing Status)                         38.28                                           -0.02                   
+                                         (362.57)                                          (0.05)                   
+--------------------------------------------------------------------------------------------------------------------
+Observations                  672             672             288             672             672             288   
+Adjusted R-squared           0.17            0.48            0.54            0.15            0.54            0.56   
+--------------------------------------------------------------------------------------------------------------------
+Standard errors in parentheses
+* p<0.10, ** p<0.05, *** p<0.01
+
+. restore
+
+. 
+. *TABLE 4
+. quietly {
+
+. esttab , title(The Medium-run Evolution of Consumption after the Earthquake) star(* 0.10 ** 0.05 *** 0.01) ///
+> keep(QUAKE) order(QUAKE) b(2) ar2(2) se label nomtitle nodepvar
+
+The Medium-run Evolution of Consumption after the Earthquake
+--------------------------------------------------------------------------------------------------------------------
+                              (1)             (2)             (3)             (4)             (5)             (6)   
+--------------------------------------------------------------------------------------------------------------------
+QUAKE                      143.43          635.11**      -1044.96***         0.03            0.06           -0.07** 
+                         (279.91)        (288.43)        (317.68)          (0.03)          (0.04)          (0.03)   
+--------------------------------------------------------------------------------------------------------------------
+Observations                 3601            1987            3083            3601            1987            3083   
+Adjusted R-squared           0.56            0.56            0.56            0.70            0.68            0.67   
+--------------------------------------------------------------------------------------------------------------------
+Standard errors in parentheses
+* p<0.10, ** p<0.05, *** p<0.01
+
+. 
+. *TABLE A1
+. preserve
+
+. quietly {
+
+. *
+. esttab _all, label noobs nonumber mtitle(1980 1980 1981 1981) ///
+> cells(mean(fmt(%10.1fc %10.1fc %10.1fc %10.1fc %10.1fc %10.0fc %10.0fc %10.0fc ///
+>                %10.1fc %10.1fc %10.1fc %10.1fc %10.1fc %10.0fc %10.0fc %10.0fc))) ///
+> title(Households Characteristics) ///
+> postfoot(\hline\hline\multicolumn{5}{p{10cm}} ///
+> {\footnotesize Note: The table reports the mean of the characteristics of the households living in the area affected by the 1980 earthquake listed n the first column. Panel A refers to residents in Campania, Panel B to resident in Basilicta. Results are
+>  reported by home ownership (homeowners and non-homeowners) and year (1980 and 1981). Size is the number of households components; Age is the householder age; Education is an index of educational qualification (1 = none, 2 = elementary school, 3 = middl
+> e school, 4 = high school, 5 = bachelor’s degree, 6 = post-graduate qualification); Employed is the percentage of employed householders; Employee is the percentage of employee among householders; Wealth is the value of total assets; Income is net dispos
+> able income excluding income from financial assets. MonAgery values are expressed as thousands of Italian Lira.} ///
+> \end{tabular}\end{table})
+
+Households Characteristics
+------------------------------------------------------------------------
+                             1980         1980         1981         1981
+                             mean         mean         mean         mean
+------------------------------------------------------------------------
+Campania                                                                
+Size                          3.7          3.6          3.8          3.8
+Age                          54.9         48.3         53.1         47.9
+Education                     2.9          2.7          3.0          2.5
+Employed                     75.2         80.3         70.2         70.0
+Employee                     44.8         63.9         43.9         56.3
+Wealth                     84,975       15,399      113,457       15,616
+Income                     11,196        8,070       15,395       10,643
+Observations                  105          147          114          213
+------------------------------------------------------------------------
+Basilicata                                                              
+Size                          4.1          4.0          4.0          4.7
+Age                          53.3         55.6         56.9         47.2
+Education                     1.7          1.6          2.0          2.7
+Employed                     87.0         79.2         64.0         94.4
+Employee                     34.8         37.5         44.0         88.9
+Wealth                     85,185       16,788       65,907       46,830
+Income                     11,254        6,035       11,150       14,020
+Observations                   23           24           25           18
+\hline\hline\multicolumn{5}{p{10cm}} {\footnotesize Note: The table reports the mean of the characteristics of the households living in the area affected by the 1980 earthquake listed n the first column. Panel A refers to residents in Campania, Panel B to
+>  resident in Basilicta. Results are reported by home ownership (homeowners and non-homeowners) and year (1980 and 1981). Size is the number of households components; Age is the householder age; Education is an index of educational qualification (1 = non
+> e, 2 = elementary school, 3 = middle school, 4 = high school, 5 = bachelor’s degree, 6 = post-graduate qualification); Employed is the percentage of employed householders; Employee is the percentage of employee among householders; Wealth is the value of
+>  total assets; Income is net disposable income excluding income from financial assets. MonAgery values are expressed as thousands of Italian Lira.} \end{tabular}\end{table}
+
+. restore
+
+. *
+. 
+. *TABLE A2
+. quietly {
+
+. esttab est*, compress ar2(2) se star(* 0.10 ** 0.05 *** 0.01) ///
+> keep(HS_Year) mtitle(80-81 81-82 80-81 81-82) b(1) label nodepvar ///
+> title(Consumption and Early Access to Reconstruction Funds, Further Evidence)
+
+Consumption and Early Access to Reconstruction Funds, Further Evidence
+--------------------------------------------------------------------
+                       (1)          (2)          (3)          (4)   
+                     80-81        81-82        80-81        81-82   
+--------------------------------------------------------------------
+HS_Year             1114.9***    -607.1      -1988.4*      3704.0** 
+                   (330.4)      (457.5)     (1109.2)     (1704.1)   
+--------------------------------------------------------------------
+Observations           579          599           90           73   
+Adjusted R-squ~d      0.41         0.43         0.77         0.73   
+--------------------------------------------------------------------
+Standard errors in parentheses
+* p<0.10, ** p<0.05, *** p<0.01
+
+. *
+. quietly {
+
+. esttab est*, compress b(2) ar2(2) se star(* 0.10 ** 0.05 *** 0.01) ///
+> keep(HS_Year) mtitle(80-81 81-82 80-81 81-82) label nodepvar ///
+> title(Consumption and Early Access to Reconstruction Funds, Further Evidence)
+
+Consumption and Early Access to Reconstruction Funds, Further Evidence
+--------------------------------------------------------------------
+                       (1)          (2)          (3)          (4)   
+                     80-81        81-82        80-81        81-82   
+--------------------------------------------------------------------
+HS_Year               0.14**      -0.10        -0.02         0.40*  
+                    (0.06)       (0.06)       (0.20)       (0.20)   
+--------------------------------------------------------------------
+Observations           579          599           90           73   
+Adjusted R-squ~d      0.50         0.49         0.79         0.77   
+--------------------------------------------------------------------
+Standard errors in parentheses
+* p<0.10, ** p<0.05, *** p<0.01
+
+. *
+. 
+. *Table A3
+. quietly {
+
+. esttab est*, compress b(2) ar2(2) se star(* 0.10 ** 0.05 *** 0.01) ///
+> keep(ValueYear Above_Value Post) nomtitle label nodepvar ///
+> title(Consumption and the Value of the House)
+
+Consumption and the Value of the House
+------------------------------------------
+                       (1)          (2)   
+------------------------------------------
+ABOVE*YEAR          -64.04        -0.03   
+                  (501.39)       (0.09)   
+
+ABOVE               618.90         0.02   
+                  (408.13)       (0.07)   
+
+YEAR               1219.26***      0.15***
+                  (333.18)       (0.06)   
+------------------------------------------
+Observations           218          218   
+Adjusted R-squ~d      0.50         0.51   
+------------------------------------------
+Standard errors in parentheses
+* p<0.10, ** p<0.05, *** p<0.01
+
+. 
+end of do-file
+
+. log close drv
+      name:  drv
+       log:  /tmp/claude-1000/-home-philipp-strack-Schreibtisch-stats/ebfedced-8cc9-4d77-80c0-168f6bf83dd0/scratchpad/ws/logs/stata_italy_2.log
+  log type:  text
+ closed on:  17 Oct 2026, 23:41:37
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
